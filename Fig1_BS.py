@@ -124,8 +124,7 @@ axC.text(
     0, 1.02, r"$\times N b^2$",
     transform=axC.transAxes,
     ha="left", va="bottom",
-    fontsize=16
-)
+    fontsize=16)
 #axC.set_title("Position-dependent variance")
 
 axC.tick_params(direction="in", top=True, right=True)
