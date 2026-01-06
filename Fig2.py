@@ -70,7 +70,7 @@ mpl.rcParams['mathtext.rm'] = 'Times New Roman'
 mpl.rcParams['mathtext.it'] = 'Times New Roman:italic'
 mpl.rcParams['mathtext.bf'] = 'Times New Roman:bold'
 
-def plot_violin_for_N(N, ax, color='#8884d8'):
+def plot_violin_for_N(N, ax, color):
     """Plot violin plot for a given N value"""
     mask = (N_list == N)
     
@@ -150,7 +150,7 @@ def plot_violin_for_N(N, ax, color='#8884d8'):
 fig, ax = plt.subplots(figsize=(4, 3))
 
 # Plot N=8 in blue
-plot_violin_for_N(8, ax, color='#8884d8')
+plot_violin_for_N(8, ax, color='#8f00ff')
 
 # Plot N=24 in orange
 plot_violin_for_N(24, ax, color='#ff8c42')
@@ -162,7 +162,7 @@ ax.grid(True, alpha=0.3, axis='y')
 
 # Create legend
 from matplotlib.patches import Patch
-legend_elements = [Patch(facecolor='#8884d8', alpha=1, label=r'$N=8$'),
+legend_elements = [Patch(facecolor='#8f00ff', alpha=1, label=r'$N=8$'),
                    Patch(facecolor='#ff8c42', alpha=1, label=r'$N=24$')]
 ax.legend(handles=legend_elements, loc='best')
 
