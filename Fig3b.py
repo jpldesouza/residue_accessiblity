@@ -214,7 +214,7 @@ def plot_Tc_vs_P_scatter(df: pd.DataFrame) -> Tuple[float, float]:
 
         print("Fixed-intercept fit (y = m x + 1):")
         print(f"  slope m = {slope:.6f}")
-        print(f"  R^2     = {R2:.6f}")
+        print(rf"  R^{2.0}     = {R2:.6f}")
 
     ax.set_xlabel(r"$P/P_{0,\infty}$")
     ax.set_ylabel(r"$T_c\left(1 + 1/\sqrt{N}\right)^2/(z\bar{\epsilon})$")
@@ -298,3 +298,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    print("hello Pedro!")
