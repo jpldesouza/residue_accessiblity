@@ -200,7 +200,7 @@ def plot_Tc_vs_P_scatter(df: pd.DataFrame) -> Tuple[float, float]:
             alpha=0.9,
             color=color_map[N],
             linewidths=0,
-            label=f"N = {N}",
+            label=rf"$N = {N}$",
         )
 
     intercept = 1.0
@@ -217,7 +217,7 @@ def plot_Tc_vs_P_scatter(df: pd.DataFrame) -> Tuple[float, float]:
         print(rf"  R^{2.0}     = {R2:.6f}")
 
     ax.set_xlabel(r"$P/P_0$")
-    ax.set_ylabel(r"$T_c\left(1 + 1/\sqrt{N}\right)^2/(z\bar{\epsilon})$")
+    ax.set_ylabel(r"$T_\mathrm{c}\left(1 + 1/\sqrt{N}\right)^2/(z\bar{\epsilon})$")
     ax.grid(False)
 
     if len(unique_N) <= 6:
@@ -269,7 +269,7 @@ def plot_Tc_vs_P_smoothed_density_contourf(
     ax.plot(xs, fit_slope * xs + fit_intercept, color="crimson", lw=1.4)
 
     ax.set_xlabel(r"$P/P_0$")
-    ax.set_ylabel(r"$T_c\left(1 + 1/\sqrt{N}\right)^2/(z\bar{\epsilon})$")
+    ax.set_ylabel(r"$T_\mathrm{c}\left(1 + 1/\sqrt{N}\right)^2/(z\bar{\epsilon})$")
     ax.grid(False)
 
     fig.tight_layout()
