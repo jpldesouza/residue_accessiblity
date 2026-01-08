@@ -10,12 +10,11 @@ import matplotlib as mpl
 # =====================================================================
 # GLOBAL PLOT STYLE — Times New Roman
 # =====================================================================
-mpl.rcParams.update({
-    "font.family": "serif",
-    "font.serif": ["Times New Roman"],
-    "mathtext.fontset": "stix",
-    "axes.unicode_minus": False,
-})
+mpl.rcParams['font.family'] = 'Times New Roman'
+mpl.rcParams['mathtext.fontset'] = 'custom'
+mpl.rcParams['mathtext.rm'] = 'Times New Roman'
+mpl.rcParams['mathtext.it'] = 'Times New Roman:italic'
+mpl.rcParams['mathtext.bf'] = 'Times New Roman:bold'
 
 
 # =====================================================================
@@ -221,10 +220,10 @@ def plot_Tc_vs_P_scatter(df: pd.DataFrame) -> Tuple[float, float]:
     ax.grid(False)
 
     if len(unique_N) <= 6:
-        ax.legend(frameon=False, fontsize=8, loc="best")
+        ax.legend(frameon=False)#, fontsize=8, loc="best")
     else:
-        ax.legend(frameon=False, fontsize=7,
-                  bbox_to_anchor=(1.02, 1), loc="upper left")
+        ax.legend(frameon=False)#, fontsize=7,
+                  #bbox_to_anchor=(1.02, 1), loc="upper left")
 
     fig.tight_layout()
     plt.savefig("Fig3b.png", dpi=1200, bbox_inches="tight")
