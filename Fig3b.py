@@ -90,6 +90,15 @@ def fit_slope_fixed_intercept(
     return float(m), float(R2)
 
 
+def classify_chain(seq: str) -> Tuple[bool, str]:
+    """Return (is_homopolymer, homotype) where homotype in {'H','T','mixed'}."""
+    sset = set(seq)
+    if len(sset) == 1:
+        t = next(iter(sset))
+        return True, t
+    return False, "mixed"
+
+
 # =====================================================================
 # Data processing
 # =====================================================================
@@ -110,6 +119,8 @@ def process_all_chains(
             N = len(seq)
             c_val = float(row["c"])
 
+            is_homo, homotype = classify_chain(seq)
+
             E = interaction_matrix_from_c(c_val)
             type_idx = np.array([0 if s == "H" else 1 for s in seq], dtype=int)
             S = E[type_idx[:, None], type_idx[None, :]]
@@ -129,6 +140,9 @@ def process_all_chains(
             phi_c = float(row.iloc[phi_col_index])
 
             all_rows.append({
+                "sequence": seq,
+                "is_homopolymer": bool(is_homo),
+                "homotype": homotype,          # 'H' or 'T' or 'mixed'
                 "length": int(N),
                 "interaction_sum": interaction_sum,
                 "delta_interaction_sum": delta_sum,
@@ -185,12 +199,17 @@ def plot_Tc_vs_P_scatter(df: pd.DataFrame) -> Tuple[float, float]:
     mask = np.isfinite(X) & np.isfinite(Y)
     X, Y, Nvals = X[mask], Y[mask], Nvals[mask]
 
+    df_plot = df.loc[mask].reset_index(drop=True)
+
     unique_N = np.sort(np.unique(Nvals))
     cmap = plt.get_cmap("viridis", len(unique_N))
     color_map = {N: cmap(i) for i, N in enumerate(unique_N)}
 
     fig, ax = plt.subplots(figsize=(4, 3))
 
+    # -----------------------------------------------------------------
+    # Base scatter: all sequences, colored by N
+    # -----------------------------------------------------------------
     for N in unique_N:
         mN = Nvals == N
         ax.scatter(
@@ -200,36 +219,73 @@ def plot_Tc_vs_P_scatter(df: pd.DataFrame) -> Tuple[float, float]:
             color=color_map[N],
             linewidths=0,
             label=rf"$N = {N}$",
+            zorder=2,
         )
 
+    # -----------------------------------------------------------------
+    # 🔴 Overlay homopolymers in red
+    # -----------------------------------------------------------------
+    homo_mask = df_plot["is_homopolymer"].values
+
+    ax.scatter(
+        X[homo_mask],
+        Y[homo_mask],
+        s=18,
+        color="crimson",
+        alpha=0.95,
+        linewidths=0,
+        zorder=4,
+        label="homopolymers",
+    )
+
     intercept = 1.0
+
+    # -----------------------------------------------------------------
+    # Fit: ALL data (solid crimson)
+    # -----------------------------------------------------------------
     fit_info = fit_slope_fixed_intercept(X, Y, intercept=intercept)
     slope = np.nan
 
     if fit_info is not None:
         slope, R2 = fit_info
         xs = np.linspace(X.min(), X.max(), 300)
-        ax.plot(xs, slope * xs + intercept, color="crimson", lw=1.8)
+        # ax.plot(xs, slope * xs + intercept, color="crimson", lw=1.8, zorder=3)
 
-        print("Fixed-intercept fit (y = m x + 1):")
+        print("Fixed-intercept fit (ALL data): y = m x + 1")
         print(f"  slope m = {slope:.6f}")
-        print(rf"  R^{2.0}     = {R2:.6f}")
+        print(rf"  R^2     = {R2:.6f}")
 
+    # -----------------------------------------------------------------
+    # Fit: HOMOPOLYMERS only (dashed crimson)
+    # -----------------------------------------------------------------
+    Xh = X[homo_mask]
+    Yh = Y[homo_mask]
+
+    homo_fit = fit_slope_fixed_intercept(Xh, Yh, intercept=intercept)
+    if homo_fit is not None:
+        slope_h, R2_h = homo_fit
+        xs = np.linspace(X.min(), X.max(), 300)
+        ax.plot(xs, slope_h * xs + intercept, color="crimson", lw=1.8, ls="-", zorder=5)
+
+        print("Fixed-intercept fit (HOMOPOLYMERS only): y = m x + 1")
+        print(f"  slope m = {slope_h:.6f}")
+        print(rf"  R^2     = {R2_h:.6f}")
+
+    # -----------------------------------------------------------------
+    # Cosmetics
+    # -----------------------------------------------------------------
     ax.set_xlabel(r"$P/P_0$")
     ax.set_ylabel(r"$T_\mathrm{c}\left(1 + 1/N^{1/2}\right)^2/(z\bar{\epsilon})$")
     ax.grid(False)
 
-    if len(unique_N) <= 6:
-        ax.legend(frameon=False)#, fontsize=8, loc="best")
-    else:
-        ax.legend(frameon=False)#, fontsize=7,
-                  #bbox_to_anchor=(1.02, 1), loc="upper left")
+    ax.legend(frameon=False)
 
     fig.tight_layout()
     plt.savefig("Fig3b.png", dpi=1200, bbox_inches="tight")
     plt.close(fig)
 
     return slope, intercept
+
 
 
 def plot_Tc_vs_P_smoothed_density_contourf(
@@ -265,7 +321,18 @@ def plot_Tc_vs_P_smoothed_density_contourf(
     cbar.set_label("log PDF (smoothed)")
 
     xs = np.linspace(X.min(), X.max(), 300)
+
+    # solid crimson: fit on all data
     ax.plot(xs, fit_slope * xs + fit_intercept, color="crimson", lw=1.4)
+
+    # dashed crimson: homopolymer-only fit (computed here too)
+    homo_mask_full = df["is_homopolymer"].values
+    Xh = df.loc[homo_mask_full, "P"].values
+    Yh = df.loc[homo_mask_full, "Tc"].values
+    homo_fit = fit_slope_fixed_intercept(Xh, Yh, intercept=fit_intercept)
+    if homo_fit is not None:
+        slope_h, _ = homo_fit
+        ax.plot(xs, slope_h * xs + fit_intercept, color="crimson", lw=1.4, ls="-")
 
     ax.set_xlabel(r"$P/P_0$")
     ax.set_ylabel(r"$T_\mathrm{c}\left(1 + 1/N^{1/2}\right)^2/(z\bar{\epsilon})$")
