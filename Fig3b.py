@@ -226,17 +226,20 @@ def plot_Tc_vs_P_scatter(df: pd.DataFrame) -> Tuple[float, float]:
     # 🔴 Overlay homopolymers in red
     # -----------------------------------------------------------------
     homo_mask = df_plot["is_homopolymer"].values
-
-    ax.scatter(
-        X[homo_mask],
-        Y[homo_mask],
-        s=18,
-        color="crimson",
-        alpha=0.95,
-        linewidths=0,
-        zorder=4,
-        label="homopolymers",
-    )
+    Xhomo=X[homo_mask]
+    Yhomo=Y[homo_mask]
+    Nvalshomo=Nvals[homo_mask]
+    for N in unique_N:
+        mN = Nvalshomo == N
+        ax.scatter(
+            Xhomo[mN], Yhomo[mN],
+            s=14,
+            alpha=0.9,
+            color=color_map[N],
+            linewidths=1,
+            zorder=2,
+            edgecolor='crimson',
+        )
 
     intercept = 1.0
 
