@@ -10,8 +10,9 @@ import matplotlib as mpl
 # =====================================================================
 # GLOBAL PLOT STYLE — Times New Roman
 # =====================================================================
-mpl.rcParams['font.family'] = 'Times New Roman'
-mpl.rcParams['mathtext.fontset'] = 'custom'
+mpl.rcParams['text.usetex'] = True
+mpl.rcParams['font.family'] = 'serif'
+mpl.rcParams['font.serif'] = ['Times New Roman']
 mpl.rcParams['font.size'] = 14
 mpl.rcParams['axes.labelsize'] = 18
 mpl.rcParams['axes.titlesize'] = 18
@@ -284,7 +285,7 @@ def plot_Tc_vs_P_scatter(df: pd.DataFrame) -> Tuple[float, float]:
     # Cosmetics
     # -----------------------------------------------------------------
     ax.set_xlabel(r"$P/P_0$")
-    ax.set_ylabel(r"$T_\mathrm{c}\left(1 + 1/N^{1/2}\right)^2/(z\bar{\epsilon})$")
+    ax.set_ylabel(r"$T_\mathrm{c}\left(1 + N^{-1/2}\right)^2/(z\bar{\epsilon})$")
     ax.grid(False)
 
     ax.legend(frameon=False, markerscale=2, handletextpad=0.2)

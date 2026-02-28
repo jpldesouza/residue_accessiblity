@@ -7,7 +7,9 @@ import matplotlib.cm as cm
 # =========================
 # Global font settings
 # =========================
-mpl.rcParams['font.family'] = 'Times New Roman'
+mpl.rcParams['text.usetex'] = True
+mpl.rcParams['font.family'] = 'serif'
+mpl.rcParams['font.serif'] = ['Times New Roman']
 mpl.rcParams['mathtext.fontset'] = 'custom'
 mpl.rcParams['font.size'] = 14
 mpl.rcParams['axes.labelsize'] = 18
@@ -163,14 +165,14 @@ sequences = ['ABBBBBBB', 'BABBBBBB', 'BBABBBBB', 'BBBABBBB',
 ax2.set_xticks(range(8))
 ax2.set_xticklabels([])
 
-circle_char = '●'
+circle_char = r'$\bullet$'
 
 for i, seq in enumerate(sequences):
     colors = ['#0000ff' if letter == 'A' else '#cfb997' for letter in seq]
     for j, color in enumerate(colors):
         ax2.text(i, -0.05 - j*0.08, circle_char,
                  ha='center', va='top',
-                 color=color, fontsize=39,
+                 color=color, fontsize=44,
                  transform=ax2.get_xaxis_transform())
 
 # Panel label

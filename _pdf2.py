@@ -64,8 +64,9 @@ def chi_av(seq_list, c_list):
 av_list=chi_av(seq_list,c_list)
 
 
-mpl.rcParams['font.family'] = 'Times New Roman'
-mpl.rcParams['mathtext.fontset'] = 'custom'
+mpl.rcParams['text.usetex'] = True
+mpl.rcParams['font.family'] = 'serif'
+mpl.rcParams['font.serif'] = ['Times New Roman']
 mpl.rcParams['font.size'] = 14
 mpl.rcParams['axes.labelsize'] = 18
 mpl.rcParams['axes.titlesize'] = 18
@@ -163,7 +164,7 @@ plot_violin_for_N(24, ax, color='#ff8c42')
 
 # Labels and formatting
 ax.set_xlabel(r'$f_\mathrm{A}$')
-ax.set_ylabel(r'$T_\mathrm{c}(1 + 1/N^{1/2})^2 / (z\bar{\epsilon})$')
+ax.set_ylabel(r'$T_\mathrm{c}(1 + N^{-1/2})^2 / (z\bar{\epsilon})$')
 ax.grid(True, alpha=0.3, axis='y')
 
 # Create legend
