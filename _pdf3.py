@@ -144,7 +144,7 @@ P = chi_de() / chi_av()
 
 ax2.plot(P, 'o-', color="#8f00ff", label=r'$P$')
 
-ax2.set_ylabel(r'$P$', rotation=0, labelpad=8)
+ax2.set_ylabel(r'$P$', rotation=0, labelpad=10)
 ax2.yaxis.label.set_va('center')
 ax2.spines['left'].set_color('#8f00ff')
 ax2.tick_params(axis='y', colors='#8f00ff')
@@ -153,7 +153,7 @@ ax2.yaxis.label.set_color('#8f00ff')
 ax3 = ax2.twinx()
 ax3.plot(Tc, 's--', color='#ff8c42', label=r'$T_\mathrm{c}$')
 
-ax3.set_ylabel(r'$T_\mathrm{c}$', rotation=0, labelpad=8)
+ax3.set_ylabel(r'$T_\mathrm{c}$', rotation=0, labelpad=10)
 ax3.yaxis.label.set_va('center')
 ax3.spines['right'].set_color('#ff8c42')
 ax3.tick_params(axis='y', colors='#ff8c42')
@@ -172,7 +172,7 @@ for i, seq in enumerate(sequences):
     for j, color in enumerate(colors):
         ax2.text(i, -0.05 - j*0.08, circle_char,
                  ha='center', va='top',
-                 color=color, fontsize=44,
+                 color=color, fontsize=42.5,
                  transform=ax2.get_xaxis_transform())
 
 # Panel label
