@@ -43,7 +43,7 @@ def eps_ij(c: float) -> np.ndarray:
     return np.array([[E_HH, E_HT],
                      [E_HT, E_TT]], float)
 
-seq_list, c_list, Tc_list, phic_list = load_data('HTseq_results_FINAL.xlsx')
+seq_list, c_list, Tc_list, phic_list = load_data('HTseq_results_FINAL_c0.xlsx')
 N_list = np.array([len(seq_list[i]) for i in range(len(seq_list))])
 N_unique = np.unique(N_list) 
 c_unique = np.unique(c_list)
@@ -107,7 +107,7 @@ def plot_violin_for_N(N, ax, color):
     # Separate data into single points and violin data
     violin_data = []
     violin_positions = []
-    
+
     for x_val in x_unique:
         mask_x = np.isclose(x_raw, x_val, rtol=1e-9)
         y_at_x = y_raw[mask_x]
