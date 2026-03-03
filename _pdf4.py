@@ -212,6 +212,8 @@ def plot_Tc_vs_P_scatter(df: pd.DataFrame) -> Tuple[float, float]:
     cmap = plt.get_cmap("viridis", len(unique_N))
     color_map = {N: cmap(i) for i, N in enumerate(unique_N)}
 
+    print(np.size(X))
+
     fig, ax = plt.subplots(figsize=(6.4, 4.8))
 
     # -----------------------------------------------------------------
