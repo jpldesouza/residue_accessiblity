@@ -287,7 +287,7 @@ def plot_Tc_vs_P_scatter(df: pd.DataFrame) -> Tuple[float, float]:
     # Cosmetics
     # -----------------------------------------------------------------
     ax.set_xlabel(r"$P/P_0$")
-    ax.set_ylabel(r"$T_\mathrm{c}\left(1 + N^{-1/2}\right)^2/(z\bar{\epsilon})$")
+    ax.set_ylabel(r"$k_\mathrm{B}T_\mathrm{c}\left(1 + N^{-1/2}\right)^2/(z\bar{\epsilon})$")
     ax.grid(False)
 
     ax.legend(frameon=False, markerscale=2, handletextpad=0.2)
@@ -347,7 +347,7 @@ def plot_Tc_vs_P_smoothed_density_contourf(
         ax.plot(xs, slope_h * xs + fit_intercept, color="crimson", lw=1.4, ls="-")
 
     ax.set_xlabel(r"$P/P_0$")
-    ax.set_ylabel(r"$T_\mathrm{c}\left(1 + 1/N^{1/2}\right)^2/(z\bar{\epsilon})$")
+    ax.set_ylabel(r"$k_\mathrm{B}T_\mathrm{c}\left(1 + 1/N^{1/2}\right)^2/(z\bar{\epsilon})$")
     ax.grid(False)
 
     fig.tight_layout()

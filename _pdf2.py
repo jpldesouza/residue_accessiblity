@@ -164,7 +164,7 @@ plot_violin_for_N(24, ax, color='#ff8c42')
 
 # Labels and formatting
 ax.set_xlabel(r'$f_\mathrm{A}$')
-ax.set_ylabel(r'$T_\mathrm{c}(1 + N^{-1/2})^2 / (z\bar{\epsilon})$')
+ax.set_ylabel(r'$k_\mathrm{B}T_\mathrm{c}(1 + N^{-1/2})^2 / (z\bar{\epsilon})$')
 ax.grid(True, alpha=0.3, axis='y')
 
 # Create legend
