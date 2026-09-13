@@ -92,15 +92,15 @@ sigma2 = (
 )
 
 x = i / N
-y = sigma2 / (b**2 * N)
+y = 3*sigma2 / (b**2 * N)
 
 axC.plot(x, y, color="black")
 
 axC.set_xlim(1/(2*N), 1+1/(2*N))
 axC.set_xticks(np.arange(1,N+1/2)/N)
 axC.set_xticklabels(np.concatenate(([r"$1$"],(N-2)*[""], [r"$N$"])))
-axC.set_ylim(min(y)-0.03, max(y)+0.01)
-axC.set_yticks([0.03,0.05,0.07,0.09])
+axC.set_ylim(3*(min(y)-0.03), 3*(max(y)+0.01))
+axC.set_yticks([0.05,0.1,0.15,0.2,0.25,0.3])#[0.03*3,0.05*3,0.07*3,0.09*3])
 
 axC.set_xlabel("Position along chain")
 axC.set_ylabel(r"MSD from CM")
@@ -115,7 +115,7 @@ axC.tick_params(direction="in", top=True, right=True)
 
 # Set all your axis properties first
 axC.set_xlim(1/(2*N), 1+1/(2*N))
-axC.set_ylim(0.011, 0.103)
+axC.set_ylim(0.011*3, 0.103*3)
 
 # Then calculate the markersize
 fig = axC.figure
@@ -129,7 +129,7 @@ markersize = 2 * radius_data / x_range * bbox.width * 72
 transpar=[1.0,0.85,0.7,0.55,0.4,0.25,0.25,0.4,0.55,0.7,0.85,1.0]
 for pos in i:
     axC.scatter(
-    pos/N, 0.019,
+    pos/N, 0.019*3,
     s=markersize**2,
     facecolor=(0, 0, 1, transpar[int(pos)-1]),
     edgecolor='black',
