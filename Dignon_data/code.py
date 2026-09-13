@@ -263,7 +263,7 @@ def calculate_P_components(seq):
     i = np.arange(1, N + 1, dtype=float)
 
     s2 = (
-        ((i / N - 1.0 + 1.0 / N) / 2.0)**2
+        (i / N - (1.0 + 1.0 / N) / 2.0)**2
         + (1.0 - 1.0 / N**2) / 12.0
     ) / 3.0
 
@@ -588,7 +588,7 @@ def calculate_Pqlambda(seq):
     i = np.arange(1, N + 1, dtype=float)
 
     s2 = (
-        ((i / N - 1.0 + 1.0 / N) / 2.0)**2
+        (i / N - (1.0 + 1.0 / N) / 2.0)**2
         + (1.0 - 1.0 / N**2) / 12.0
     ) / 3.0
 
@@ -747,7 +747,7 @@ def build_fit_data(seq):
 
     # s_i^2 = sigma_i^2 / (N b^2)
     s2 = (
-        ((i / N - 1.0 + 1.0 / N) / 2.0)**2
+        (i / N - (1.0 + 1.0 / N) / 2.0)**2
         + (1.0 - 1.0 / N**2) / 12.0
     ) / 3.0
 
